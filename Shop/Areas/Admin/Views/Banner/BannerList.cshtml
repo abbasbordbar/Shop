@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Shop.Models.Banner>
+
+@{
+    ViewData["Title"] = "BannerList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container" style="margin-right:300px;height:700px" >
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BannerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BannerId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        
+                        <textarea id="editor1">سلام من عباس بردبار هستم</textarea>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="ChangeActive" asp-route-Id="@item.BannerId">@(item.IsActive==true ? "غیر فعال کردن":"فعال کردن")</a>
+                    </td>
+                    <td>
+                       <a class="btn btn-info" asp-action="EditBanner">ویرایش</a>
+                       <select id="categorylist" class="form-control" asp-items="Html.GetEnumSelectList<BannetColor>()"></select>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/Admin/bower_components/ckeditor/ckeditor.js"></script>
+<script>
+    
+    CKEDITOR.replace('editor1', {
+        Language: 'fa',
+        filebrowserImageUploadUrl: "/Admin/FileManager/ImageUpload",
+        filebrowserBrowseUrl: "/Admin/FileManager/CkEditorFileMavager",
+        filebrowserWindowWidth: 1050,
+        filebrowserWindowHeight:1050
+
+
+    })
+</script>

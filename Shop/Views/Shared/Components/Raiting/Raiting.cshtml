@@ -1,0 +1,34 @@
+﻿@model Shop.ViewModels.ProductDetailViewModel
+@using Shop.ExtensionMethods;
+
+@{
+    Layout = null;
+}
+
+<div class="container" style="direction:rtl;margin-bottom:200px">
+    <h1 style="text-align:right;margin-bottom:100px;font-family:'B Titr'">امتیاز کاربران</h1>
+    @foreach (var item in Model.raitings)
+    { 
+        <div class="row" style="margin-right:200px">
+
+    
+            <div class="col-md-6">
+                <h6 style="text-align:right">@item.Attribute</h6>
+
+                <div class="progress" style="margin-right:30px">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @item.Value%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+                
+
+            </div>
+            <h6 style="margin-top:27px">@RatingEx.Getrating(item.Value)</h6>
+   
+           </div>
+    
+            }
+
+        
+
+</div>
+
+

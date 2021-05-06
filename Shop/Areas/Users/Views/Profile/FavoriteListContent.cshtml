@@ -1,0 +1,139 @@
+﻿@model List<FavoriteListForProfileViewModel>
+
+
+<div class="page-header__title">
+    <h1>علاقه‌مندی‌ها</h1>
+</div>
+
+<div class="block">
+    <div class="container">
+        <table class="wishlist">
+            <thead class="wishlist__head">
+                <tr class="wishlist__row">
+                    <th class="wishlist__column wishlist__column--image">تصویر</th>
+                    <th class="wishlist__column wishlist__column--product">محصول</th>
+                    <th class="wishlist__column wishlist__column--stock">وضعیت انبار</th>
+                    <th class="wishlist__column wishlist__column--price">قیمت</th>
+                    <th class="wishlist__column wishlist__column--tocart"></th>
+                    <th class="wishlist__column wishlist__column--remove"></th>
+                </tr>
+            </thead>
+            <tbody class="wishlist__body">
+                @foreach (var item in Model)
+                {
+                    <tr class="wishlist__row">
+                        <td class="wishlist__column wishlist__column--image">
+                            <a href=""><img src="~/Layout/img/MainImg/@item.ImgName " alt=""></a>
+                        </td>
+                        <td class="wishlist__column wishlist__column--product">
+                            <a href="" class="wishlist__product-name">@item.ProductTitle</a>
+                            <div class="wishlist__product-rating">
+                                <div class="rating">
+                                    <div class="rating__body">
+                                        <svg class="rating__star rating__star--active" width="13px" height="12px">
+                                            <g class="rating__fill">
+                                                <use xlink:href="images/sprite.svg#star-normal"></use>
+                                            </g>
+                                            <g class="rating__stroke">
+                                                <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                            </g>
+                                        </svg>
+                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                            <div class="rating__fill">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                            <div class="rating__stroke">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                        </div>
+                                        <svg class="rating__star rating__star--active" width="13px" height="12px">
+                                            <g class="rating__fill">
+                                                <use xlink:href="images/sprite.svg#star-normal"></use>
+                                            </g>
+                                            <g class="rating__stroke">
+                                                <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                            </g>
+                                        </svg>
+                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                            <div class="rating__fill">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                            <div class="rating__stroke">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                        </div>
+                                        <svg class="rating__star rating__star--active" width="13px" height="12px">
+                                            <g class="rating__fill">
+                                                <use xlink:href="images/sprite.svg#star-normal"></use>
+                                            </g>
+                                            <g class="rating__stroke">
+                                                <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                            </g>
+                                        </svg>
+                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                            <div class="rating__fill">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                            <div class="rating__stroke">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                        </div>
+                                        <svg class="rating__star rating__star--active" width="13px" height="12px">
+                                            <g class="rating__fill">
+                                                <use xlink:href="images/sprite.svg#star-normal"></use>
+                                            </g>
+                                            <g class="rating__stroke">
+                                                <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                            </g>
+                                        </svg>
+                                        <div class="rating__star rating__star--only-edge rating__star--active">
+                                            <div class="rating__fill">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                            <div class="rating__stroke">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                        </div>
+                                        <svg class="rating__star" width="13px" height="12px">
+                                            <g class="rating__fill">
+                                                <use xlink:href="images/sprite.svg#star-normal"></use>
+                                            </g>
+                                            <g class="rating__stroke">
+                                                <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                            </g>
+                                        </svg>
+                                        <div class="rating__star rating__star--only-edge">
+                                            <div class="rating__fill">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                            <div class="rating__stroke">
+                                                <div class="fake-svg-icon"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wishlist__product-rating-legend">9 نقد و بررسی</div>
+                            </div>
+                        </td>
+                        <td class="wishlist__column wishlist__column--stock">
+                            <div class="badge badge-success">موجود در انبار</div>
+                        </td>
+                        <td class="wishlist__column wishlist__column--price">699,000 تومان</td>
+                        <td class="wishlist__column wishlist__column--tocart">
+                            <a asp-action="GetProductDetail" asp-controller="ProductDetail" asp-route-id="@item.ProductId" type="button" class="btn btn-primary btn-sm">مشاهده محصول</a>
+                        </td>
+                        <td class="wishlist__column wishlist__column--remove">
+                            <button type="button" class="btn btn-light btn-sm btn-svg-icon">
+                                <svg width="12px" height="12px">
+                                    <use xlink:href="images/sprite.svg#cross-12"></use>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿@model Shop.ViewModels.ProductDetailViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="~/Layout/js/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+
+
+
+<body>
+    <main id="main">
+        <section class="portfolio-details">
+            <div class="container">
+
+                <div class="portfolio-details-container">
+
+                    <div class="owl-carousel portfolio-details-carousel">
+
+                        <img src="~/Layout/img/MainImg/@Model.ImgName" style="width:700px;height:300px" class="img-fluid" alt="">
+
+
+
+
+                    </div>
+
+                    <div class="portfolio-info">
+                        <h3>Project information</h3>
+                        <ul style="direction:rtl;text-align:right">
+                            <li><strong>دسته بندی</strong>: @Model.CatName</li>
+                            <li><strong>نام محصول</strong>: @Model.ProductName</li>
+                            <li><strong>قیمت</strong>: @Model.Price</li>
+
+                        </ul>
+                        <button class="btn btn-primary">اضافه به سبد خرید</button>
+                    </div>
+
+                </div>
+
+                <div class="portfolio-description">
+                    <h2>توضیحات</h2>
+                    <p>
+                        @Model.Text
+                    </p>
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </main>
+    <!-- End #main -->
+
+
+    @await Component.InvokeAsync("Raiting", Model.ProductId)
+
+
+    @await Component.InvokeAsync("ProductPropertyComp", Model.ProductId)
+
+    <!---------------------------------------------------------------نظرات کاربران--------------------------------------------------------->
+    <button type="button" class="btn btn-primary btn-lg btn-block showcomment" style="margin-bottom:200px">برای دیدن نظرات کلیک کنید</button>
+
+    <div class="container " style="margin-bottom:300px;direction:rtl" id="comment">
+
+
+    </div>
+
+        <!--------------end------------->
+    <script>
+        $(".showcomment").click(function () {
+            $('#comment').load("/ProductDetail/GetComment", { Productid:1})
+        })
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+    
+
+   
+
+
+       
+
+  
+    
+
+  

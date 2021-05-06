@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "ProductListContainer";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container" style="margin-right:300px;margin-top:100px;height:auto">
+    <a class="btn btn-success" asp-action="CreateProduct">افزودن محصول</a>
+    <div class="row">
+        <div class="col-md-9">
+            <form asp-action="ProductList" data-ajax="true" data-ajax-update="#list" data-ajax-mode="replace">
+                <input type="text" name="searchtext" class="form-control col-md-9" />
+                <button type="submit" class="btn btn-success col-md-3">جستجو</button>
+            </form>
+            <div id="list">
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+@section Script{
+    <script src="~/Layout/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $("#list").load("/Admin/Catalog/ProductList", { searchtext:'',pagenumber:1 });
+    </script>
+}
+

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Shop.Models.Category>
+
+@{
+    ViewData["Title"] = "CategoryList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>CategoryList</h2>
+
+
+<div class="container" style="background-color:white; margin-right:300px">
+
+    <a class="btn btn-success" asp-action="CreateCategory" asp-controller="Category">دسته بندی جدید</a>
+
+
+    <div class="row" style="margin-top:100px">
+
+        <div class="col-sm-12">
+            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending">Id</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="نام دسته بندی: activate to sort column ascending">نام دسته بندی</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="توضیحات: activate to sort column ascending">توضیحات</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="عکس: activate to sort column ascending">عکس</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">@item.CategoryId</td>
+                            <td>@item.CatName</td>
+                            <td>@item.Descrption</td>
+                            <td>@Html.Raw((string.IsNullOrEmpty(item.ImgCat) ? "" : "<img src='/Layout/img/Imgcat/" + @item.ImgCat + "'class= 'thumbnail' width='150'/>"))</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#modal-delete" name="Delete" data-id="@item.CategoryId">
+                                    حذف
+                                </button>
+
+                                <a asp-action="EditCategory" asp-controller="Category" asp-route-Id="@item.CategoryId">ویرایش</a>
+                            </td>
+                        </tr>
+
+                    }
+
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="modal-delete" style=" padding-right: 16px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Default مدال</h4>
+            </div>
+            <div class="modal-body">
+                <p>آیا میخواهید این دسته بندی را حذف کنید؟</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">خیر</button>
+                <form asp-action="DeleteCategory">
+                    <input type="hidden" name="id" class="Deleteid" />
+                    <button type="submit" class="btn btn-primary">بله</button>
+
+                </form>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section Script{
+    <script>
+        $(".btn-delete").click(function () {
+            var id = $(this).data("id");
+            $(".Deleteid").val(id);
+        })
+    </script>
+}

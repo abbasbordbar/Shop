@@ -1,0 +1,227 @@
+﻿@using Shop.ViewModels;
+@using Shop.ExtensionMethods;
+@model List<CommentViewModel>
+@{
+    Layout = null;
+    int PageCount = (int)Math.Ceiling((double)ViewBag.CommentCount / 3);
+    int Pagenumber = ViewBag.CommentPageNumber;
+    int Sort = ViewBag.CommentSort;
+
+
+}
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="~/Layout/js/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item ">
+        <a class="nav-link @(ViewBag.CommentSort==1 ? "active":"js-Sort_item")" data-sort="1" href="#">نظرات</a>
+    </li>
+    <li class="nav-item ">
+        <a class="nav-link @(ViewBag.CommentSort==2 ? "active":"js-Sort_item")" data-sort="2" href="#">مفیدترین ها</a>
+    </li>
+    <li class="nav-item Comment-tab sort3">
+        <a class="nav-link @(ViewBag.CommentSort==3 ? "active":"js-Sort_item")" data-sort="3" href="#">جدیدترین ها</a>
+    </li>
+</ul>
+
+
+
+
+<div id="home" class="container tab-pane active">
+    <br>
+    @foreach (var item in Model)
+    {
+        <div style="background-color:antiquewhite;margin-bottom:10px">
+            <span>توسط  @item.UserName  درتاریخ  @item.CreateDate.GetMonthPersian()</span>
+            <h3>@item.CommentTitle</h3>
+            <p>@item.CommentText</p>
+
+            <button type="button" class="btn btn-primary ">
+                Like <span class="badge badge-light">@item.CommentLike</span>
+            </button>
+            <button type="button" class="btn btn-danger">
+                DisLike <span class="badge badge-light">@item.DisLike</span>
+            </button>
+        </div>
+    }
+</div>
+
+
+<!---------Pagination-->
+<div class="container" style="margin-right:40%">
+    <div class="row">
+        @if (PageCount > 1)
+        {
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (PageCount > 10)
+                    {
+                        @if (Pagenumber <= 5)
+                        {
+                            @if (Pagenumber != 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= Pagenumber + 5; i++)
+                            {
+                                <li class="page-item ">
+                                    <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                                </li>
+
+                            }
+                            @if (PageCount != Pagenumber)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            if (Pagenumber + 5 > PageCount)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                @for (int i = PageCount - 9; i <= PageCount; i++)
+                                {
+                                    <li class="page-item ">
+                                        <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                                    </li>
+
+
+                                }
+                                @if (PageCount != Pagenumber)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+
+                                }
+
+
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                @for (int i = Pagenumber - 5; i < Pagenumber + 5; i++)
+                                {
+                                    <li class="page-item ">
+                                        <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                                    </li>
+
+
+                                }
+
+
+
+
+
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+
+                                </li>
+
+
+
+                            }
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        @if (Pagenumber != 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        }
+
+                        @for (int i = 1; i <= PageCount; i++)
+                        {
+                            <li class="page-item ">
+                                <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                            </li>
+
+                        }
+                        @if (PageCount != Pagenumber)
+                        {
+                            <li class="page-item">
+                                <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+
+                        }
+                    }
+
+
+                </ul>
+            </nav>
+        }
+    </div>
+</div>
+@*---End Pagination---*@
+
+<script>
+    $('#CommentList').delegate(".js-paper_item", "click", function () {
+        var pagenum = parseInt($(this).data("pagenumber"))
+        $('#CommentList').load("/ProductDetail/CommentList", { Productid:@ViewBag.Productid, Pagenumber: pagenum, Sort: @ViewBag.CommentSort, CommentCount:@ViewBag.CommentCount })
+    });
+
+    $('#CommentList').delegate(".js-Sort_item", "click", function () {
+        var Sort = parseInt($(this).data("sort"))
+
+        $('#CommentList').load("/ProductDetail/CommentList", { Productid:@ViewBag.Productid, Pagenumber: 1, Sort: Sort, CommentCount:@ViewBag.CommentCount })
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

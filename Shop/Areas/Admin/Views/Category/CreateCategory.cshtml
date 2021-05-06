@@ -1,0 +1,77 @@
+﻿@model Shop.ViewModels.CreateCategoryViewModel
+
+@{
+    ViewData["Title"] = "CreateCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container " style="margin-top:100px;margin-bottom:500px">
+    <div class="row" style="margin-right: 200px">
+        <div class="col-md-5">
+            <form asp-action="CreateCategory" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descrption" class="control-label"></label>
+                    <input asp-for="Descrption" class="form-control" />
+                    <span asp-validation-for="Descrption" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input type="file" accept="image/*" asp-for="Image" class="form-control" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <select asp-items="@(new SelectList(ViewBag.CategoryList,"Id","Title"))" style="height:40px;width:200px" class="form-control col-md-5" id="categorylist"></select>
+
+                    <div>
+                        <a class="btn btn-success btn-add" style="margin-right:10px">افزودن</a>
+                    </div>
+                    <div class="parentlist col-sm-12" style="margin-right:100px;margin-top:10px">
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <input type="submit" value="ثبت" class="btn btn-default" />
+                </div>
+            </form>
+            <div>
+                <a class="btn btn-info" asp-action="Index">بازگشت به لیست</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Script{
+    <script>
+        $(".btn-add").click(function () {
+            if ($("#categorylist").val()) {
+                var value = $("#categorylist").children("option:selected").val();
+                var text = $("#categorylist").children("option:selected").text();
+                $(".parentlist").append("<div class='btn-block btn-info' style='padding:7px'><button style='margin-left=0;background-color:red'type='button'class='btn-remove'>×</button>" +
+                    " <input type='hidden'value='" + value + "'name='parentlist'/><span style='margin-left:10px'class='parenttext'>" + text + "</span></div>");
+
+                $("#categorylist").children("option:selected").remove();
+
+            }
+
+        });
+
+        $(".parentlist").delegate(".btn-remove", 'click', function () {
+            var text = $(this).nextAll($(".parenttext")).text();
+            var value = $(this).nextAll($("input[type=hidden]")).val();
+            $("#categorylist").append($('<option>', {
+                value: value,
+                text: text
+            }));
+            $(this).parent().remove();
+        });
+    </script>
+}

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Shop.ViewModels.ProductViewModel>
+
+@{
+    Layout = null;
+}
+
+
+
+<div class="row portfolio-container" data-aos="fade-up">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+                <img src="~/Layout/img/MainImg/@item.ImgName" style="width:300px;height:200px" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                    <a href="~/Layout/img/Productmainimg/@item.ImgName" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="bx bx-shopping-bag"></i></a>
+                    <a href="/Product/@item.ProductId" title="More Details"><i class="bx bx-detail"></i></a>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+
+
+</div>
+

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Shop.Models.PropertyValue>
+
+@{
+    ViewData["Title"] = "PropertyValueList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content" style="margin-right:300px;height:700px">
+    <a class="btn btn-success" asp-action="CreatePropertyValue">ایجاد مقدار خصوصیت</a>
+    @if (TempData["res"] != null)
+    {
+        if (TempData["res"].ToString() == "success")
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true">+</button>
+                عملیات با موفقیت انجام شد
+            </div>
+        }
+        if (TempData["res"].ToString() == "faild")
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true">+</button>
+                خطا در عملیات
+            </div>
+        }
+    }
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PropertyValueId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Value)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PropertyNameId)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PropertyValueId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PropertyNameId)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

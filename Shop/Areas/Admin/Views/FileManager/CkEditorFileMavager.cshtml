@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "CkEditorFileMavager";
+    Layout = null;
+}
+
+<html>
+<head>
+    <title>مدیریت فایل ها</title>
+    <link href="~/Admin/dist/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="~/Layout/vendor/jquery/jquery.min.js"></script>
+    <link href="~/Admin/dist/css/FileManager.css" rel="stylesheet" />
+    <link href="~/Admin/bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <script src="~/Layout/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Admin/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="content">
+        @await Html.PartialAsync("CkEditorImageViewer.cshtml")
+
+    </div>
+
+</body>
+</html>
+

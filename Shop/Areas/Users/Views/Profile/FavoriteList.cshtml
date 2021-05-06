@@ -1,0 +1,9 @@
+﻿@model List<FavoriteListForProfileViewModel>
+@{
+    ViewData["Title"] = "FavoriteList";
+    Layout = "~/Areas/Users/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="content">
+    @await Html.PartialAsync("FavoriteListContent", Model);
+</div>

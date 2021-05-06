@@ -1,0 +1,60 @@
+﻿@model Shop.ViewModels.AddProductViewModel
+
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container" style="margin-right:300px;margin-top:100px;height:700px">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateProduct" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ProductName" class="control-label"></label>
+                    <input asp-for="ProductName" class="form-control" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label asp-for="Text" class="control-label"></label>
+                    <input asp-for="Text" class="form-control" />
+                    <span asp-validation-for="Text" class="text-danger"></span>
+                </div>*@
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label">دسته بندی</label>
+                    <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.CategoryList,"Id","Title"))" style="height:40px;width:200px" class="form-control " id="categorylist"></select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BrandId" class="control-label">برند</label>
+                    <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.BrandList,"Id","Title"))" style="height:40px;width:200px" class="form-control " id="categorylist"></select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgName" class="control-label"></label>
+                    <input asp-for="ImgName" type="file" accept="image/*" class="form-control" />
+                    <span asp-validation-for="ImgName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsPublished" />@Html.DisplayNameFor(Model=>Model.IsPublished)
+                        </label>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="ذخیره" class="btn btn-success" />
+                    <a asp-action="ProductList" class="btn btn-danger">انصراف</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        
+    </div>
+</div>

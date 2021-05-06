@@ -1,0 +1,187 @@
+﻿
+@model IEnumerable<Shop.ViewModels.ProductListViewModel>
+
+@{
+    ViewData["Title"] = "ProductList";
+    Layout = null;
+    int PageCount = (int)Math.Ceiling((double)ViewBag.Count / 2);
+    int Pagenumber = ViewBag.PageNumber;
+}
+
+<div id="productlist">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.Raw((String.IsNullOrEmpty(item.Image) ? "" : "<img src='/Layout/img/MainImg/" + item.Image + "'class='thumbnail' width='150'/>"))
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        <a asp-action="GalleryList" asp-route-id="@item.Id" class="btn btn-info">گالری</a> |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+    <!---------Pagination-->
+    <div class="container" style="margin-right:40%">
+        <div class="row">
+            @if (PageCount > 1)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @if (PageCount > 10)
+                        {
+                            @if (Pagenumber <= 5)
+                            {
+                                @if (Pagenumber != 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link js-paper_item" data-pagenumber="1" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @for (int i = 1; i <= Pagenumber + 5; i++)
+                                {
+                                    <li class="page-item ">
+                                        <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i">@i</a>
+                                    </li>
+
+                                }
+                                @if (PageCount != Pagenumber)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link js-paper_item" data-pagenumber="@PageCount" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+
+                                }
+
+
+                            }
+                            else
+                            {
+                                if (Pagenumber + 5 > PageCount)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    @for (int i = PageCount - 9; i <= PageCount; i++)
+                                    {
+                                        <li class="page-item ">
+                                            <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                                        </li>
+                                    }
+                                    @if (PageCount != Pagenumber)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    @for (int i = Pagenumber - 5; i < Pagenumber + 5; i++)
+                                    {
+                                        <li class="page-item ">
+                                            <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                                        </li>
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+
+                                    </li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            @if (Pagenumber != 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="1" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= PageCount; i++)
+                            {
+                                <li class="page-item ">
+                                    <a class="page-link  @(i==Pagenumber ? "active":"js-paper_item")" data-pagenumber="@i" href="#">@i</a>
+                                </li>
+
+                            }
+                            @if (PageCount != Pagenumber)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link js-paper_item" data-pagenumber="@PageCount" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+
+                            }
+                        }
+
+
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>
+@*---End Pagination---*@
+
+<script src="~/Layout/js/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    $('#productlist').delegate(".js-paper_item", "click", function () {
+        var Pagenumber = parseInt($(this).data("pagenumber"))
+        $('#list').load("/Admin/Catalog/ProductList", { searchtext: '@ViewBag.searchtext', Pagenumber: Pagenumber })
+            });
+</script>
+
+

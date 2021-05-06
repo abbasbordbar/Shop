@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "MainFileManager";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="~/Admin/dist/css/FileManager.css" rel="stylesheet" />
+</head>
+@section style{
+    
+}
+<div class="content" style="margin-right:300px;direction:ltr">
+    @await Html.PartialAsync("MainImageViewer.cshtml")
+</div>

@@ -1,0 +1,48 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="block">
+    <div class="container" style="margin-top:200px;margin-bottom:100px">
+        <div class="row" style="direction:rtl;text-align:right">
+            <div class="col-md-6 d-flex">
+                <div class="card flex-grow-1 mb-md-0">
+                    <div class="card-body">
+                        <h3 class="card-title">ورود</h3>
+                        <form asp-action="Login" >
+
+                            <div class="form-group">
+                                <label>آدرس ایمیل</label>
+                                <input asp-for="Email" class="form-control" placeholder="ایمیل را وارد کنید">
+                            </div>
+                            <div class="form-group">
+                                <label>رمز عبور</label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="رمز عبور را وارد کنید"> <small class="form-text text-muted"><a class="btn btn-default" asp-action="Forgotpassword">فراموشی رمز عبور</a></small>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <span class="form-check-input input-check">
+                                        <span class="input-check__body">
+                                            <input class="input-check__input" asp-for="IsPersistent" type="checkbox" id="login-remember"> <span class="input-check__box"></span>
+                                            <svg class="input-check__icon" width="9px" height="7px">
+                                                <use xlink:href="images/sprite.svg#check-9x7"></use>
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <label style="margin-right:20px" class="form-check-label" for="login-remember">مرا به خاطر بسپار</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-4">ورود</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

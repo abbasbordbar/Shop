@@ -1,0 +1,303 @@
+﻿@model AddressListViewModel
+@{
+    Layout = null;
+}
+<div class="container" style="margin-top:100px">
+    <div class="row">
+        <a href="" class="addresses-list__item addresses-list__item--new  js-add_address-btn" data-toggle="modal" data-target="#AddAddress">
+
+            <div class="addresses-list__plus"></div>
+            <div class="btn btn-secondary btn-sm">افزودن جدید</div>
+        </a>
+    </div>
+</div>
+
+
+<div class="addresses-list" style="margin-top:100px">
+
+
+    <div class="addresses-list__divider"></div>
+
+    @foreach (var item in Model.AddressList)
+    {
+        <div class="addresses-list__item card address-card  js-edit_edit" data-address='{"id":"@item.UserAddressId","FullName":"@item.FullName","ProvincName":"@item.ProvincName","CityName":"@item.CityName","PostalAddress":"@item.PostalAddress","Phone":"@item.Phone","PostCode":"@item.PostCode","cityid":"@item.CityId","provinceid":"@item.ProvincId"}'>
+            <div class="address-card__badge">پیش فرض</div>
+            <div class="address-card__body">
+                <div class="address-card__name">@item.FullName</div>
+                <div class="address-card__row">
+                    <p>
+                        استان :@item.ProvincName شهرستان :@item.CityName ,@item.PostalAddress
+                    </p>
+                </div>
+                <div class="address-card__row">
+                    <div class="address-card__row-title">شماره تلفن</div>
+                    <div class="address-card__row-content"><span class="ltr_text">@item.Phone</span></div>
+                </div>
+                <div class="address-card__row">
+                    <div class="address-card__row-title">کدپستی</div>
+                    <div class="address-card__row-content"><p>@item.PostCode</p></div>
+                </div>
+
+
+                <div class="address-card__footer"><a href="#" class="js-Edit-Address" data-toggle="modal" data-target="#EditAddress">ویرایش</a>&nbsp;&nbsp; <a href="">حذف</a></div>
+            </div>
+        </div>
+    }
+</div>
+
+@*----------------------------------------------------------------------modal--------------------------------------------------------------*@
+
+<div class="modal  modal fade" id="AddAddress" data-remodal-id="add-address">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" style="align-items:flex-end">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h4 class="modal-title">آدرس را وارد کنید</h4>
+                <i class="fas fa-cloud"></i>
+                <form asp-action="CreateAddress" data-ajax="true" data-ajax-method="post" data-ajax-success="CreateSuccess">
+                    <div class="form-group">
+                        <label for="usr">نام تحویل گیرنده</label>
+                        <input asp-for="@Model.Address.FullName" type="text" class="form-control" id="usr" style="width:300px">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="usr">شماره موبایل</label>
+                        <input asp-for="@Model.Address.Phone" class="form-control" id="usr" style="width:200px">
+                    </div>
+                    <div class="container">
+                        <div class="row">
+
+                            <div>
+                                <div class="form-group">
+                                    <label>استان</label>
+                                    <select style="width:200px" class=" Province" asp-for="@Model.Address.ProvincId" asp-items="@(new SelectList(ViewBag.ProvinceList,"ProvincId","ProvincName"))">
+                                        <option value="">استان را انتخاب کنید</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" style="margin-right:20px">
+                                <label>شهر</label>
+                                <select style="width:200px" asp-for="@Model.Address.CityId" class="cityId">
+                                    <option value="">شهر را انتخاب کنید</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment">آدرس پستی</label>
+                        <textarea asp-for="@Model.Address.PostalAddress" class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="usr">کدپستی</label>
+                        <input asp-for="@Model.Address.PostCode" type="text" class="form-control" id="usr" style="width:200px">
+                    </div>
+                    <div class="form-group">
+                        <button id="add-btn" type="submit">send</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="container">
+                    <div class="row" style="display:flex">
+                        <div>
+
+                        </div>
+                        <div style="margin-right:500px">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*</div>*@
+
+@*=======================================================================end modal======================================================*@
+
+
+@*=======================================================================Edit modal======================================================*@
+
+<div class="remodal  modal fade" id="EditAddress" data-remodal-id="Edit-address">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" style="align-items:flex-end">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h4 class="modal-title">ویرایش آدرس</h4>
+                <i class="fas fa-cloud"></i>
+                <form asp-action="EditAddress" data-ajax="true" data-ajax-method="post" data-ajax-success="CreateSuccess" id="editform">
+                    <input type="hidden" asp-for="@Model.Address.UserAddressId">
+                    <div class="form-group">
+                        <span asp-validation-for="@Model.Address.FullName">نام تحویل گیرنده</span>
+                        <input asp-for="@Model.Address.FullName" type="text" class="form-control" style="width:300px">
+                    </div>
+
+                    <div class="form-group">
+                        <span asp-validation-for="@Model.Address.Phone">شماره موبایل</span>
+                        <input asp-for="@Model.Address.Phone" class="form-control" style="width:200px">
+                    </div>
+                    <div class="container">
+                        <div class="row">
+
+                            <div>
+                                <div class="form-group">
+                                    <span asp-validation-for="@Model.Address.ProvincId">استان</span>
+                                    <select style="width:200px" class=" Province" asp-for="@Model.Address.ProvincId" asp-items="@(new SelectList(ViewBag.ProvinceList,"ProvincId","ProvincName"))">
+                                        <option value="">استان را انتخاب کنید</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" style="margin-right:20px">
+                                <span asp-validation-for="@Model.Address.CityId">شهر</span>
+                                <select style="width:200px" asp-for="@Model.Address.CityId" class="cityId">
+                                    <option value="">شهر را انتخاب کنید</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <span asp-validation-for="@Model.Address.PostalAddress">آدرس پستی</span>
+                        <textarea asp-for="@Model.Address.PostalAddress" class="form-control" rows="5"></textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <span asp-validation-for="@Model.Address.PostCode">کدپستی</span>
+                        <input asp-for="@Model.Address.PostCode" type="text" class="form-control" style="width:200px">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" id="add-btn" type="submit">send</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="container">
+                    <div class="row" style="display:flex">
+                        <div>
+
+                        </div>
+                        <div style="margin-right:500px">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@*=======================================================================end modal======================================================*@
+
+<script src="~/Layout/js/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Layout/vendor/jquery/jquery.min.js"></script>
+<script src="~/Layout/js/main.js"></script>
+<script src="~/js/remodal.js"></script>
+
+@*<script src="~/js/jquery.selectric.js"></script>*@
+
+<script>
+    var cid = 0;
+    var add_address = $('[data-remodal-id=add-address]').remodal();
+    var Edit_address = $('[data-remodal-id=Edit-address]').remodal();
+    $('.js-add_address-btn').click(function () {
+        add_address.open();
+
+    });
+    function CreateSuccess() {
+        add_address.close();
+        Edit_address.close();
+        $('#content').load("/Profile/AddressContent");
+        $('#content').persianumber();
+    }
+
+
+    //$(document).ready(function () {
+    //    $(function () {
+    //        $('select').selectric({
+    //            hasSearch: true
+    //        }
+    //        );
+    //    });
+    //})
+
+    $(".js-Edit-Address").click(function () {
+        var editform = $("#editform");
+        var data = $(this).parents(".js-edit_edit").data("address");
+        cid = data.cityid;
+        editform.find('#Address_UserAddressId').val(data.id);
+        editform.find('#Address_FullName').val(data.FullName);
+        editform.find('#Address_Phone').val(data.Phone);
+        editform.find('#Address_ProvincId').val(data.provinceid);
+
+        editform.find('#Address_PostalAddress').val(data.PostalAddress);
+        editform.find('#Address_PostCode').val(data.PostCode);
+
+
+        //editform.find('#Address_CityId').val(data.cityid);
+
+
+
+
+        Edit_address.open();
+    })
+
+    $(".Province").change(function () {
+        var id = $(this).children("option:selected").val();
+        var citySelect = $(this).parent().parent().parent().find($(".cityId"));
+        $.ajax({
+            type: "POST",
+            url: "/Profile/GetCity",
+            data: { id: id },
+            success: function (data) {
+                citySelect.children('.js-item').remove();
+                data.forEach(function (item) {
+                    citySelect.append($("<option class='js-item'></option>").val(item.cityId).html(item.cityName));
+
+
+                });
+                if (cid > 0) {
+                    citySelect.val(cid);
+                }
+                cid = 0;
+                //citySelect.selectric("refresh").change();
+            }
+        });
+
+    });
+</script>

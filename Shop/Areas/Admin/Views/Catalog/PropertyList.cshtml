@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Shop.Models.PropertyName>
+
+@{
+    ViewData["Title"] = "PropertyList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content" style="margin-right:300px;height:700px">
+    @if (TempData["res"] != null)
+    {
+        if (TempData["res"].ToString() == "success")
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true">+</button>
+                عملیات با موفقیت انجام شد
+            </div>
+        }
+        if (TempData["res"].ToString() == "faild")
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true">+</button>
+                خطا در عملیات
+            </div>
+        }
+    }
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                   
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Priority)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UseSearch)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PropertyGroupId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryId)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                      
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Priority)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UseSearch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PropertyGroupId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#modal-delete" name="Delete" data-id="@item.CategoryId">
+                                حذف
+                            </button>
+
+                            <a asp-action="EditPropertyName" asp-controller="Catalog" asp-route-Id="@item.PropertyNameId" class="btn btn-info">ویرایش</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

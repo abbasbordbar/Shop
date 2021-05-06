@@ -1,0 +1,120 @@
+﻿@model Shop.ViewModels.CategoryViewModel
+   
+
+    <section id="hero">
+        <div class="hero-container" data-aos="fade-up">
+            <h1>Welcome to Fars-Shop</h1>
+
+            <a href="#about" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
+        </div>
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= About Section ======= -->
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+            <div class="container">
+
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                    <h2>خدمات</h2>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up">
+                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                            <h4 class="title"><a href="">پشتیبانی </a></h4>
+                            <p class="description">شرکت ما پشتیبانی خوب وسریعی به مشتریان میدهد</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                            <div class="icon"><i class="bx bx-file"></i></div>
+                            <h4 class="title"><a href="">اطمینان از خرید</a></h4>
+                            <p class="description">ما به شما این اطمینان را میدهیم که از خرید خود راضی باشید</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                            <div class="icon"><i class="bx bx-tachometer"></i></div>
+                            <h4 class="title"><a href="">ارسال سریع</a></h4>
+                            <p class="description"> شرکت ما در کوتاه ترین زمان ممکن کالای خریداری شده را ارسال میکند </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                            <div class="icon"><i class="bx bx-world"></i></div>
+                            <h4 class="title"><a href="">خرید آسان</a></h4>
+                            <p class="description">شما میتوانید به راحتی در سایت خرید کنید </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Services Section -->
+        <!-- Category section -->
+        <section>
+
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-3 g-4"style="direction:rtl;text-align:right">
+                    @foreach (var item in Model.Categories)
+                    {
+                        <div class="col" >
+                            <div class="card h-100">
+                                <img src="~/Layout/img/CategoryImg/@item.ImgCat" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.CatName</h5>
+                                   @await Component.InvokeAsync("ShowSubCategory", item.CategoryId)
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+
+                </div>
+            </div>
+        </section>
+        <!--  end Category section -->
+
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                    <h2>محصولات</h2>
+
+                </div>
+
+                <div class="row" data-aos="fade-in">
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <ul id="portfolio-flters">
+
+                            <li data-filter=".filter-app">لپ تاپ</li>
+                            <li data-filter=".filter-card">گوشی</li>
+                            <li data-filter=".filter-web">لوازم الکترونیک</li>
+                            <li data-filter=".filter-web">لوازم اشپزخانه</li>
+                            <li data-filter="*" class="filter-active">صفحه اصلی</li>
+
+                        </ul>
+                    </div>
+                </div>
+                @foreach (var item in Model.Categories)
+                 {
+                    @await Component.InvokeAsync("ShowProduct", item.CategoryId)
+
+                 }
+
+            </div>
+        </section>
+        <!-- ======= Testimonials Section ======= -->
+        <!-- ======= Team Section ======= -->
+
+
+
+    </main><!-- End #main -->

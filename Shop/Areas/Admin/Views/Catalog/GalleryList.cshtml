@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Shop.Models.ProductImg>
+
+@{
+    ViewData["Title"] = "GalleryList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    TempData["ProductImage"] = ViewBag.productid;
+}
+<div class="content" style="margin-right:300px;height:700px">
+    <a class="btn btn-success" data-toggle="modal" data-target="#modal-add">افزودن عکس</a>
+
+
+
+    @if (TempData["res"] != null)
+    {
+        if (TempData["res"].ToString() == "success")
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true">+</button>
+                عملیات با موفقیت انجام شد
+            </div>
+        }
+        if (TempData["res"].ToString() == "faild")
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true">+</button>
+                خطا در عملیات
+            </div>
+        }
+    }
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductImgId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProdoctImgName)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductImgId)
+                        </td>
+                        <td>
+                            <img src="~/Layout/img/Prodoctsubimg/@item.ProdoctImgName" class="thumbnail" width="150" />
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- /.modal-content -->
+    <div class="modal fade in" id="modal-add" style=" padding-right: 16px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">افزودن تصویر</h4>
+                </div>
+                <div class="modal-body">
+                    <p>عکس را انتخاب کنید</p>
+                </div>
+                <div class="modal-footer">
+
+                    <form asp-action="CreatProductImage" enctype="multipart/form-data">
+                        <div class="form-control">
+                            <input type="file" accept="image/*" name="imagename" />
+                        </div>
+                        <button type="submit" class="btn btn-primary col-md-3" style="margin-top:5px">ثبت</button>
+                        <button type="button" class="btn btn-danger pull-left col-md-3" data-dismiss="modal" style="margin-top:5px">انصراف</button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
